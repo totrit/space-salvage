@@ -3,6 +3,27 @@ def on_on_overlap(emerates, star):
     star.destroy()
 sprites.on_overlap(SpriteKind.player, SpriteKind.food, on_on_overlap)
 
+def create_star():
+    crystal = sprites.create(img("""
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . b . . . . . . .
+        . . . . . . . b d b . . . . . .
+        . . . . . . b 5 5 5 b . . . . .
+        . . . . . b b 5 5 5 b b . . . .
+        . . b b b b 5 5 5 1 1 b b b b .
+        . . b 5 5 5 5 5 5 1 1 5 5 5 b .
+        . . b d d 5 5 5 5 5 5 5 d d b .
+        . . . b d d 5 5 5 5 5 d d b . .
+        . . . c b 5 5 5 5 5 5 5 b c . .
+        . . . c b 5 5 5 5 5 5 5 b c . .
+        . . . c 5 5 d d b d d 5 5 c . .
+        . . . c 5 d d c c c d d 5 c . .
+        . . . c c c c . . . c c c c . .
+        . . . . . . . . . . . . . . . .
+        . . . . . . . . . . . . . . . .
+    """), SpriteKind.food)
+    crystal.set_position(randint(0, 160), 10)
+    crystal.set_velocity(0, 50)
 scene.set_background_image(img("""
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -147,24 +168,7 @@ spaceship = sprites.create(img("""
 spaceship.set_position(80, 110)
 spaceship.set_stay_in_screen(True)
 controller.move_sprite(spaceship)
-crystal = sprites.create(img("""
-        . . . . . . . b b . . . . . . .
-        . . . . . . b d d b . . . . . .
-        . . . . . b d 5 5 d b . . . . .
-        . . . . b b 5 5 5 5 b b . . . .
-        . . . . b 5 5 5 5 5 5 b . . . .
-        b b b b b 5 5 5 5 1 1 d b b b b
-        b 5 5 5 5 5 5 5 5 1 1 1 5 5 5 b
-        b d d 5 5 5 5 5 5 1 1 1 5 d d b
-        . b d d 5 5 5 5 5 5 5 5 d d b .
-        . . b b 5 5 5 5 5 5 5 5 b b . .
-        . . c b 5 5 5 5 5 5 5 5 b c . .
-        . . c 5 5 5 5 d d 5 5 5 5 c . .
-        . . c 5 5 d b b b b d 5 5 c . .
-        . . c 5 d b c c c c b d 5 c . .
-        . . c c c c . . . . c c c c . .
-        . . . . . . . . . . . . . . . .
-        """),
-    SpriteKind.food)
-crystal.set_position(randint(0, 160), 10)
-crystal.set_velocity(0, 50)
+
+create_star()
+create_star()
+create_star()
