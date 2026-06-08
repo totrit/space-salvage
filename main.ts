@@ -1,28 +1,53 @@
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function on_on_overlap(emerates: Sprite, star: Sprite) {
-    info.changeScoreBy(1)
+    info.changeScoreBy(star.scale)
     star.destroy()
+    create_star(randint(1, 3), 3, true)
 })
-function create_star() {
-    let crystal = sprites.create(img`
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . b . . . . . . .
-        . . . . . . . b d b . . . . . .
-        . . . . . . b 5 5 5 b . . . . .
-        . . . . . b b 5 5 5 b b . . . .
-        . . b b b b 5 5 5 1 1 b b b b .
-        . . b 5 5 5 5 5 5 1 1 5 5 5 b .
-        . . b d d 5 5 5 5 5 5 5 d d b .
-        . . . b d d 5 5 5 5 5 d d b . .
-        . . . c b 5 5 5 5 5 5 5 b c . .
-        . . . c b 5 5 5 5 5 5 5 b c . .
-        . . . c 5 5 d d b d d 5 5 c . .
-        . . . c 5 d d c c c d d 5 c . .
-        . . . c c c c . . . c c c c . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-    `, SpriteKind.Food)
-    crystal.setPosition(randint(0, 160), 10)
-    crystal.setVelocity(0, 50)
+function create_star(size: number, speed: number, is_hazard: boolean) {
+    let space_object: Sprite;
+    if (is_hazard) {
+        space_object = sprites.create(img`
+           . 3 . . . . . . . . . . . 4 . .
+           . 3 3 . . . . . . . . . 4 4 . .
+           . 3 d 3 . . 4 4 . . 4 4 d 4 . .
+           . . 3 5 3 4 5 5 4 4 d d 4 4 . .
+           . . 3 d 5 d 1 1 d 5 5 d 4 4 . .
+           . . 4 5 5 1 1 1 1 5 1 1 5 4 . .
+           . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 .
+           . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 .
+           . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 .
+           . . 4 3 d 5 5 5 d 5 5 d d d 4 .
+           . 4 5 5 d 5 5 5 d d d 5 5 4 . .
+           . 4 5 5 d 3 5 d d 3 d 3 5 4 . .
+           . 4 4 d d 4 d d d 4 3 d d 4 . .
+           . . 4 5 4 4 4 4 4 4 4 4 4 . . .
+           . 4 5 4 . . 4 4 4 . . . 4 4 . .
+           . 4 4 . . . . . . . . . . 4 4 .
+       `, SpriteKind.Projectile)
+    } else {
+        space_object = sprites.create(img`
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . b . . . . . . .
+                . . . . . . . b d b . . . . . .
+                . . . . . . b 5 5 5 b . . . . .
+                . . . . . b b 5 5 5 b b . . . .
+                . . b b b b 5 5 5 1 1 b b b b .
+                . . b 5 5 5 5 5 5 1 1 5 5 5 b .
+                . . b d d 5 5 5 5 5 5 5 d d b .
+                . . . b d d 5 5 5 5 5 d d b . .
+                . . . c b 5 5 5 5 5 5 5 b c . .
+                . . . c b 5 5 5 5 5 5 5 b c . .
+                . . . c 5 5 d d b d d 5 5 c . .
+                . . . c 5 d d c c c d d 5 c . .
+                . . . c c c c . . . c c c c . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+            `, SpriteKind.Food)
+    }
+    
+    space_object.setPosition(randint(0, 160), 10)
+    space_object.setVelocity(0, 50 * speed)
+    space_object.setScale(size, ScaleAnchor.Middle)
 }
 
 scene.setBackgroundImage(img`
@@ -168,6 +193,4 @@ let spaceship = sprites.create(img`
 spaceship.setPosition(80, 110)
 spaceship.setStayInScreen(true)
 controller.moveSprite(spaceship)
-create_star()
-create_star()
-create_star()
+create_star(3, 2, false)

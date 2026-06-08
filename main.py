@@ -1,29 +1,55 @@
 def on_on_overlap(emerates, star):
-    info.change_score_by(1)
+    info.change_score_by(star.scale)
     star.destroy()
+    create_star(randint(1,3 ),3, True)
 sprites.on_overlap(SpriteKind.player, SpriteKind.food, on_on_overlap)
 
-def create_star():
-    crystal = sprites.create(img("""
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . b . . . . . . .
-        . . . . . . . b d b . . . . . .
-        . . . . . . b 5 5 5 b . . . . .
-        . . . . . b b 5 5 5 b b . . . .
-        . . b b b b 5 5 5 1 1 b b b b .
-        . . b 5 5 5 5 5 5 1 1 5 5 5 b .
-        . . b d d 5 5 5 5 5 5 5 d d b .
-        . . . b d d 5 5 5 5 5 d d b . .
-        . . . c b 5 5 5 5 5 5 5 b c . .
-        . . . c b 5 5 5 5 5 5 5 b c . .
-        . . . c 5 5 d d b d d 5 5 c . .
-        . . . c 5 d d c c c d d 5 c . .
-        . . . c c c c . . . c c c c . .
-        . . . . . . . . . . . . . . . .
-        . . . . . . . . . . . . . . . .
-    """), SpriteKind.food)
-    crystal.set_position(randint(0, 160), 10)
-    crystal.set_velocity(0, 50)
+def create_star(size,speed,is_hazard):
+    if is_hazard:
+       space_object = sprites.create(img("""
+           . 3 . . . . . . . . . . . 4 . .
+           . 3 3 . . . . . . . . . 4 4 . .
+           . 3 d 3 . . 4 4 . . 4 4 d 4 . .
+           . . 3 5 3 4 5 5 4 4 d d 4 4 . .
+           . . 3 d 5 d 1 1 d 5 5 d 4 4 . .
+           . . 4 5 5 1 1 1 1 5 1 1 5 4 . .
+           . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 .
+           . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 .
+           . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 .
+           . . 4 3 d 5 5 5 d 5 5 d d d 4 .
+           . 4 5 5 d 5 5 5 d d d 5 5 4 . .
+           . 4 5 5 d 3 5 d d 3 d 3 5 4 . .
+           . 4 4 d d 4 d d d 4 3 d d 4 . .
+           . . 4 5 4 4 4 4 4 4 4 4 4 . . .
+           . 4 5 4 . . 4 4 4 . . . 4 4 . .
+           . 4 4 . . . . . . . . . . 4 4 .
+       """), SpriteKind.projectile)
+        
+    else:
+        space_object = sprites.create(img("""
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . b . . . . . . .
+                . . . . . . . b d b . . . . . .
+                . . . . . . b 5 5 5 b . . . . .
+                . . . . . b b 5 5 5 b b . . . .
+                . . b b b b 5 5 5 1 1 b b b b .
+                . . b 5 5 5 5 5 5 1 1 5 5 5 b .
+                . . b d d 5 5 5 5 5 5 5 d d b .
+                . . . b d d 5 5 5 5 5 d d b . .
+                . . . c b 5 5 5 5 5 5 5 b c . .
+                . . . c b 5 5 5 5 5 5 5 b c . .
+                . . . c 5 5 d d b d d 5 5 c . .
+                . . . c 5 d d c c c d d 5 c . .
+                . . . c c c c . . . c c c c . .
+                . . . . . . . . . . . . . . . .
+                . . . . . . . . . . . . . . . .
+            """), SpriteKind.food)
+        
+    
+    space_object.set_position(randint(0, 160), 10)
+    space_object.set_velocity(0, 50*speed)
+    space_object.set_scale(size, ScaleAnchor.MIDDLE)
+
 scene.set_background_image(img("""
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -168,7 +194,4 @@ spaceship = sprites.create(img("""
 spaceship.set_position(80, 110)
 spaceship.set_stay_in_screen(True)
 controller.move_sprite(spaceship)
-
-create_star()
-create_star()
-create_star()
+create_star(3,2,False)
